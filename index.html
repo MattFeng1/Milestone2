@@ -24,7 +24,43 @@
 	 	<br>
 	 <h3 style="font-size:130%; font-family:verdana;"><a href="shop.html"><span style="color: black">Shop</span></a><h3>	
 	 
-	 
+	 <button id = "find-me">Find the nearest COVID-19 testing area</button><br/>
+		<p id = "status"></p>
+		<a id = "map-link" target="_blank"></a>
+
+	<script type="text/javascript">
+	function geoFindMe() {
+
+  	const status = document.querySelector('#status');
+  	const mapLink = document.querySelector('#map-link');
+
+ 	 mapLink.href = '';
+  	mapLink.textContent = '';
+
+  	function success(position) {
+    	const latitude  = position.coords.latitude;
+    	const longitude = position.coords.longitude;
+
+    status.textContent = '';
+   		 mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+   		 mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  	function error() {
+   		 status.textContent = 'Unable to retrieve your location';
+  }
+
+ 	 if(!navigator.geolocation) {
+    	status.textContent = 'Geolocation is not supported by your browser';
+  } else {
+   		status.textContent = 'Locating…';
+    	navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+}
+		document.querySelector('#find-me').addEventListener('click', geoFindMe);
+	</script>
+		 
 	 	<div class="row">
 	 	<div class="column">
 	 		<img id=p1 src="surgical mask.jpg" alt="surgical mask" width="150" height="150" border="3" style="margin:0px 5px"><a href="https://www.amazon.com/s?k=surgical+mask&ref=nb_sb_noss"><figcaption><span style="color: black">Surgical mask</span></figcaption>
